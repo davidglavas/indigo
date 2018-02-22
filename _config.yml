@@ -1,20 +1,20 @@
 # main text of home
-name: Nana 20:41
-bio: A Man who travels the world eating noodles
+name: David Glavas
+bio: Computer Science student inerested in security and machine learning.
 
 # twitter summary info
 description: A blog about technology and stuff related
 
 # if it's an external image, update below for true
 # better with square images
-external-image: false
-picture: assets/images/profile.jpg
+external-image: true
+picture: https://avatars3.githubusercontent.com/u/18364494?s=400&v=4
 
 # If you want to include your resume, set to true
 # and specify source (external or local).
 resume: true
 resume-external: true
-resume-url: https://google.com/?q=my+resume
+resume-url: http://www.orimi.com/pdf-test.pdf
 
 url: https://davidglavas.github.io/indigo/
 # your url: http://USERNAME.github.io
@@ -34,31 +34,31 @@ disqus:
   categories: [blog, project] # only show disqus for posts that have these categories
 
 # if you don't have any of social below, comment the line
-facebook: myfacebook
-twitter: mytwitter
+#facebook: myfacebook
+#twitter: mytwitter
 # google: mygoogle
 # instagram: myinstagram
 # pinterest: mypinterest
-# linkedin: mylinkedin
+linkedin: davidglavas
 # youtube: myyoutube
 # spotify: myspotify
-github: mygithub
+github: davidglavas
 # lastfm: mylastfm
 # stackoverflow: 7044681/mystackoverflow
 # quora: userquora
 # reddit: username
-medium: medium
+#medium: medium
 # vimeo: myvimeo
 # lanyrd: mylanyrd
-email: myemail@gmail.com
+email: divadglavas@gmail.com
 
 authors:
-    johndoe:
-        name: Nana 20:41
-        bio: A Man who travels the world eating noodles
-        external-image: false
-        picture: assets/images/profile.jpg
-        twitter: johndoe
+    davidglavas:
+        name: David Glavas
+        bio: Computer science student interested in security and machine learning.
+        external-image: true
+        picture: https://avatars3.githubusercontent.com/u/18364494?s=400&v=4
+#        twitter: johndoe
 #    jamesfoster:
 #        name: James Foster
 #        bio: A Man who develops software with coffee
@@ -76,17 +76,17 @@ width: normal
 # paginate_path: "blog/:num/"
 
 # if you don't need projects, comment the *projects* configs below
-projects: true
+projects: false
 
 # if you don't need "about" or "blog", comment them out below
 about: true
 blog: true
 
 # do you want to show the "read time" of the posts?
-read-time: true
+read-time: false
 
 # do you want to show the "tags" inside the posts?
-show-tags: true
+show-tags: false
 
 # related posts inside a post?
 related: true
