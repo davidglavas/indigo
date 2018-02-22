@@ -16,7 +16,7 @@ resume: true
 resume-external: true
 resume-url: http://www.orimi.com/pdf-test.pdf
 
-url: https://davidglavas.github.io/indigo/
+url: http://davidglavas.github.io
 # your url: http://USERNAME.github.io
 
 permalink: /:title/
@@ -30,7 +30,7 @@ permalink: /:title/
 
 # if you don't want comments in your posts, leave categories empty
 disqus:
-  shortname: mydisqus # enter this from your disqus account
+  shortname: vNr9vxBXho # enter this from your disqus account
   categories: [blog, project] # only show disqus for posts that have these categories
 
 # if you don't have any of social below, comment the line
