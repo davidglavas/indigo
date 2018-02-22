@@ -1,8 +1,16 @@
 ---
 title: "Computing Visibility Polygons"
-date: 2017-01-01 00:30:00
-comments: true
-mathjax: true
+layout: post
+date: 2018-02-20 12:34
+image: http://www.text2image.com/user_images/text2image_Z21925_20180222_034210.jpg
+headerImage: true
+tag:
+- markdown
+- elements
+star: true
+category: blog
+author: davidglavas
+description: I discuss my implementation of an algorithm for computing visibility polygons in linear time.
 ---
 
 # <p align="center"> TL;DR </p>
