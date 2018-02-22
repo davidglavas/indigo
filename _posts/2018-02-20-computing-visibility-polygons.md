@@ -2,7 +2,7 @@
 title: "Computing Visibility Polygons"
 layout: post
 date: 2018-02-20 12:34
-image: http://www.text2image.com/user_images/text2image_Z21925_20180222_034210.jpg
+mathjax: true
 headerImage: true
 tag:
 - markdown
@@ -12,6 +12,8 @@ category: blog
 author: davidglavas
 description: I discuss my implementation of an algorithm for computing visibility polygons in linear time.
 ---
+
+[Visibility polygon pic](http://www.text2image.com/user_images/text2image_Z21925_20180222_034210.jpg)
 
 # <p align="center"> TL;DR </p>
  
