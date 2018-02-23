@@ -170,7 +170,7 @@ For the orientation test we use the [determinant approach](https://www.cs.cmu.ed
 
 The orientation test is performed by evaluating the sign of $orientation(A, B, C)$:
 
-$$
+\begin{equation}
 orientation(A, B, C) = 
 \begin{vmatrix}
 a_x & a_y & 1 \\\\ 
@@ -182,11 +182,23 @@ c_x & c_y & 1
 a_x - c_x & a_y - c_y \\\\ 
 b_x - c_x & b_y - c_y
 \end{vmatrix}
-$$
+\end{equation}
 
 \begin{equation}
   \int_0^\infty \frac{x^3}{e^x-1}\,dx = \frac{\pi^4}{15}
   \label{eq:sample}
+  
+\begin{vmatrix}
+a_x & a_y & 1 \\\\ 
+b_x & b_y & 1 \\\\
+c_x & c_y & 1
+\end{vmatrix}
+
+\begin{vmatrix}
+a_x & a_y & 1 \\ 
+b_x & b_y & 1 \\
+c_x & c_y & 1
+\end{vmatrix}
 \end{equation}
 
 If $orientation(A, B, C)$ is less than 0 then $C$ lies to the right of the line that goes through $A$ and $B$, if greater than 0 then $C$ is to the left of, and if equal to 0 then $C$ lies on the line.
