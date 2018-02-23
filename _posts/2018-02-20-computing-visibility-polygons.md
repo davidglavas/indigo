@@ -175,29 +175,12 @@ orientation(A, B, C) =
 \begin{vmatrix}
 a_x & a_y & 1 \\\\ 
 b_x & b_y & 1 \\\\
-c_x & c_y & 1
+c_x & c_y & 1 \\\\
 \end{vmatrix}
 =
 \begin{vmatrix}
 a_x - c_x & a_y - c_y \\\\ 
 b_x - c_x & b_y - c_y
-\end{vmatrix}
-\end{equation}
-
-\begin{equation}
-  \int_0^\infty \frac{x^3}{e^x-1}\,dx = \frac{\pi^4}{15}
-  \label{eq:sample}
-  
-\begin{vmatrix}
-a_x & a_y & 1 \\\\ 
-b_x & b_y & 1 \\\\
-c_x & c_y & 1
-\end{vmatrix}
-
-\begin{vmatrix}
-a_x & a_y & 1 \\ 
-b_x & b_y & 1 \\
-c_x & c_y & 1
 \end{vmatrix}
 \end{equation}
 
