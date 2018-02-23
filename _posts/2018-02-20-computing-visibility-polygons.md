@@ -14,7 +14,7 @@ description: I discuss my implementation of an algorithm for computing visibilit
 ---
 
 <p align="center">
-  <img width="460" height="300" src="http://www.text2image.com/user_images/text2image_Z21925_20180222_034210.jpg">
+  <img src="http://www.text2image.com/user_images/text2image_Z21925_20180222_034210.jpg">
 </p>
 
 
@@ -49,15 +49,20 @@ The preprocessing will shift the polygon such that the viewpoint $z$ becomes the
 	private static Pair<VsRep, Double> preprocess(CCWPolygon pol, Point2D z) {
 		// shift polygon such that z is origin
 		pol = pol.shiftToOrigin(z);
-		boolean zIsVertex = pol.vertices.contains(CommonUtils.origin2D);
+		
 		// determines the closest vertex to z
+		boolean zIsVertex = pol.vertices.contains(CommonUtils.origin2D);
 		PolarPoint2D v0 = getInitialVertex(pol, zIsVertex);
+		
 		// converts the polygon's vertices from Cartesian to polar
 		List<PolarPoint2D> V = pol.vertices.stream().map(x -> new PolarPoint2D(x)).collect(Collectors.toList());
+		
 		// adjusts list V such that v0 is at the beginning
 		placeV0First(V, v0);
+		
 		// if z is on boundary then [v0, v1, ..., vk, z] -> [z, v0, v1, ..., vk]
 		adjustPositionOfz(V, zIsVertex, z);
+		
 		// rotate all points of the shifted polygon clockwise such that v0 lies on the x axis
 		for (PolarPoint2D curr : V) {
 			if (!curr.isOrigin())
@@ -165,8 +170,8 @@ For the orientation test we use the [determinant approach](https://www.cs.cmu.ed
 
 The orientation test is performed by evaluating the sign of $orientation(A, B, C)$:
 
-\[
-orientation(A, B, C) = 
+
+$$ orientation(A, B, C) = 
 \begin{vmatrix}
 a_x & a_y & 1\\ 
 b_x & b_y & 1 \\
@@ -176,8 +181,7 @@ c_x & c_y & 1
 \begin{vmatrix}
 a_x - c_x & a_y - c_y\\ 
 b_x - c_x & b_y - c_y
-\end{vmatrix}
-\]
+\end{vmatrix} $$
 
 If $orientation(A, B, C)$ is less than 0 then $C$ lies to the right of the line that goes through $A$ and $B$, if greater than 0 then $C$ is to the left of, and if equal to 0 then $C$ lies on the line.
 
