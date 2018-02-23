@@ -127,17 +127,18 @@ I included tests of the pre- and post-processing steps, see `TestPreprocessing.j
 
 Given the inpout polygon $P$ and a viewpoint $z$ I created tests for the following six scenarios. The polygon can be either convex or concave, for both types $z$ can be in $P$'s interior, or on an edge of $P$'s boundary, or on one of $P$'s vertices. The following figures are visualizations of those six scenarios.
 
-![Convex, edge](https://github.com/davidglavas/davidglavas.github.io/blob/master/_posts/Figures/2018-02-20-computing-visibility-polygons/ConvexEdge.jpg "Convex polygon, viewpoint lies on one of its edges.") ![Convex, interior](https://github.com/davidglavas/davidglavas.github.io/blob/master/_posts/Figures/2018-02-20-computing-visibility-polygons/ConvexInterior.jpg "Convex polygon, viewpoint lies in its interior.") ![Convex, vertex](https://github.com/davidglavas/davidglavas.github.io/blob/master/_posts/Figures/2018-02-20-computing-visibility-polygons/ConvexVertex.jpg "Convex polygon, viewpoint lies on one of its vertices.")
+![Convex, edge](https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-02-20-computing-visibility-polygons/ConvexEdge.jpg "Convex polygon, viewpoint lies on one of its edges.") ![Convex, interior](https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-02-20-computing-visibility-polygons/ConvexInterior.jpg "Convex polygon, viewpoint lies in its interior.") ![Convex, vertex](https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-02-20-computing-visibility-polygons/ConvexVertex.jpg "Convex polygon, viewpoint lies on one of its vertices.")
 
-![Concave, edge](https://github.com/davidglavas/davidglavas.github.io/blob/master/_posts/Figures/2018-02-20-computing-visibility-polygons/NotConvexEdge.jpg "Concave polygon, viewpoint lies on one of its edges.") ![Concave, interior](https://github.com/davidglavas/davidglavas.github.io/blob/master/_posts/Figures/2018-02-20-computing-visibility-polygons/NotConvexInterior.jpg "Concave polygon, viewpoint lies in its interior.") ![Concave, vertex](davidglavas.github.io/_posts/Figures/2018-02-20-computing-visibility-polygons/NotConvexVertex.jpg "Concave polygon, viewpoint lies on one of its vertices.")
+![Concave, edge](https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-02-20-computing-visibility-polygons/NotConvexEdge.jpg "Concave polygon, viewpoint lies on one of its edges.") ![Concave, interior](https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-02-20-computing-visibility-polygons/NotConvexInterior.jpg "Concave polygon, viewpoint lies in its interior.") ![Concave, vertex](https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-02-20-computing-visibility-polygons/NotConvexVertex.jpg "Concave polygon, viewpoint lies on one of its vertices.")
 
 The algorithm can also be used to create the illusion of computing the visibility region from multiple viewpoints, that is, all points in $P$ visible from at least one of the viewpoints. I say illusion because the algorithm actually computes the visibility polygon for each of the viewpoints individually and unions them by drawing them onto the same plane. This points to a natural approach to actually compute the visibility region, we could use Joe and Simpson's algorithm to compute the visibility polygons individually and union them with, say, [Martinez et al.'s algorithm](http://www.cs.ucr.edu/~vbz/cs230papers/martinez_boolean.pdf).
 
-
+<figure>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-02-20-computing-visibility-polygons/HMSExample.PNG">
+  <img src="https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-02-20-computing-visibility-		polygons/HMSExample.PNG">
+	<figcaption>Visibility area for the 4 viewpoints.</figcaption>
 </p>
-
+</figure>
 ## Usage
 The `VisibilityPolygon` class can be used to compute the visibility polygon from a point inside of a simple polygon (given as n vertices in counterclockwise order) in O(n) time and space. Here is an example:
 
