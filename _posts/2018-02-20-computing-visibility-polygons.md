@@ -16,7 +16,10 @@ description: I discuss my implementation of an algorithm for computing visibilit
 <p align="center">
   <img width="460" height="300" src="http://www.text2image.com/user_images/text2image_Z21925_20180222_034210.jpg">
 </p>
- 
+
+
+## TL;DR
+
 I discuss the gist and limitations of my [implementation](github.com) (Java) of Joe and Simpson's [visibility polygon algortihm](https://cs.uwaterloo.ca/research/tr/1985/CS-85-38.pdf), that is, an asymptotically optimal algorithm for computing the visibility polygon from a point inside of a simple polygon.
 
 
