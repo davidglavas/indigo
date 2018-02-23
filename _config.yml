@@ -1,9 +1,9 @@
 # main text of home
 name: David Glavas
-bio: Computer Science student inerested in security and machine learning.
+bio: Computer science student inerested in security engineering.
 
 # twitter summary info
-description: A blog about technology and stuff related
+description: A blog about things a computer science student thinks about.
 
 # if it's an external image, update below for true
 # better with square images
@@ -14,7 +14,7 @@ picture: https://avatars3.githubusercontent.com/u/18364494?s=400&v=4
 # and specify source (external or local).
 resume: true
 resume-external: false
-resume-url: davidglavas.github.io/assets/davidglavasresume.pdf
+resume-url: davidglavas.github.io/assets/DavidGlavasResume.pdf
 
 url: http://davidglavas.github.io
 # your url: http://USERNAME.github.io
@@ -55,7 +55,7 @@ email: divadglavas@gmail.com
 authors:
     davidglavas:
         name: David Glavas
-        bio: Computer science student interested in security and machine learning.
+        bio: Computer science student inerested in security engineering.
         external-image: true
         picture: https://avatars3.githubusercontent.com/u/18364494?s=400&v=4
 #        twitter: johndoe
