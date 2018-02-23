@@ -127,9 +127,9 @@ I included tests of the pre- and post-processing steps, see `TestPreprocessing.j
 
 Given the inpout polygon $P$ and a viewpoint $z$ I created tests for the following six scenarios. The polygon can be either convex or concave, for both types $z$ can be in $P$'s interior, or on an edge of $P$'s boundary, or on one of $P$'s vertices. The following figures are visualizations of those six scenarios.
 
-![alt-text-1](https://github.com/glavas/glavas.github.io/blob/master/_posts/Figures/2017-01-01-computing-visibility-polygons/ConvexEdge.PNG "Convex polygon, viewpoint lies on one of its edges.") ![alt-text-2](https://github.com/glavas/glavas.github.io/blob/master/_posts/Figures/2017-01-01-computing-visibility-polygons/ConvexInterior.PNG "Convex polygon, viewpoint lies in its interior.") ![alt-text-3](https://github.com/glavas/glavas.github.io/blob/master/_posts/Figures/2017-01-01-computing-visibility-polygons/ConvexVertex.PNG "Convex polygon, viewpoint lies on one of its vertices.")
+![Convex, edge](https://github.com/glavas/glavas.github.io/blob/master/_posts/Figures/2017-01-01-computing-visibility-polygons/ConvexEdge.PNG "Convex polygon, viewpoint lies on one of its edges.") ![Convex, interior](https://github.com/glavas/glavas.github.io/blob/master/_posts/Figures/2017-01-01-computing-visibility-polygons/ConvexInterior.PNG "Convex polygon, viewpoint lies in its interior.") ![Convex, vertex](https://github.com/glavas/glavas.github.io/blob/master/_posts/Figures/2017-01-01-computing-visibility-polygons/ConvexVertex.PNG "Convex polygon, viewpoint lies on one of its vertices.")
 
-![alt-text-1](https://github.com/glavas/glavas.github.io/blob/master/_posts/Figures/2017-01-01-computing-visibility-polygons/NotConvexEdge.PNG "Concave polygon, viewpoint lies on one of its edges.") ![alt-text-2](https://github.com/glavas/glavas.github.io/blob/master/_posts/Figures/2017-01-01-computing-visibility-polygons/NotConvexInterior.PNG "Concave polygon, viewpoint lies in its interior.") ![alt-text-3](https://github.com/glavas/glavas.github.io/blob/master/_posts/Figures/2017-01-01-computing-visibility-polygons/NotConvexVertex.PNG "Concave polygon, viewpoint lies on one of its vertices.")
+![Concave, edge](https://github.com/glavas/glavas.github.io/blob/master/_posts/Figures/2017-01-01-computing-visibility-polygons/NotConvexEdge.PNG "Concave polygon, viewpoint lies on one of its edges.") ![Concave, interior](https://github.com/glavas/glavas.github.io/blob/master/_posts/Figures/2017-01-01-computing-visibility-polygons/NotConvexInterior.PNG "Concave polygon, viewpoint lies in its interior.") ![Concave, vertex](https://github.com/glavas/glavas.github.io/blob/master/_posts/Figures/2017-01-01-computing-visibility-polygons/NotConvexVertex.PNG "Concave polygon, viewpoint lies on one of its vertices.")
 
 The algorithm can also be used to create the illusion of computing the visibility region from multiple viewpoints, that is, all points in $P$ visible from at least one of the viewpoints. I say illusion because the algorithm actually computes the visibility polygon for each of the viewpoints individually and unions them by drawing them onto the same plane. This points to a natural approach to actually compute the visibility region, we could use Joe and Simpson's algorithm to compute the visibility polygons individually and union them with, say, [Martinez et al.'s algorithm](http://www.cs.ucr.edu/~vbz/cs230papers/martinez_boolean.pdf).
 
@@ -174,8 +174,8 @@ The orientation test is performed by evaluating the sign of $orientation(A, B, C
 orientation(A, B, C) = 
 \begin{vmatrix}
 a_x & a_y & 1 \\\\ 
-b_x & b_y & 1 \\\\
-c_x & c_y & 1 \\\\
+b_x & b_y & 1 \\\
+c_x & c_y & 1 
 \end{vmatrix}
 =
 \begin{vmatrix}
