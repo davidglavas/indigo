@@ -13,8 +13,8 @@ picture: https://avatars3.githubusercontent.com/u/18364494?s=400&v=4
 # If you want to include your resume, set to true
 # and specify source (external or local).
 resume: true
-resume-external: true
-resume-url: http://www.orimi.com/pdf-test.pdf
+resume-external: false
+resume-url: davidglavas.github.io/assets/davidglavasresume.pdf
 
 url: http://davidglavas.github.io
 # your url: http://USERNAME.github.io
