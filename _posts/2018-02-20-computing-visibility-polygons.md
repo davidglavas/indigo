@@ -133,12 +133,15 @@ Given the inpout polygon $P$ and a viewpoint $z$ I created tests for the followi
 
 The algorithm can also be used to create the illusion of computing the visibility region from multiple viewpoints, that is, all points in $P$ visible from at least one of the viewpoints. I say illusion because the algorithm actually computes the visibility polygon for each of the viewpoints individually and unions them by drawing them onto the same plane. This points to a natural approach to actually compute the visibility region, we could use Joe and Simpson's algorithm to compute the visibility polygons individually and union them with, say, [Martinez et al.'s algorithm](http://www.cs.ucr.edu/~vbz/cs230papers/martinez_boolean.pdf).
 
-<figure>
+
 <p align="center">
+	<figure>
   <img src="https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-02-20-computing-visibility-		polygons/HMSExample.PNG">
 	<figcaption>Visibility area for the 4 viewpoints.</figcaption>
+	</figure>
 </p>
-</figure>
+
+
 ## Usage
 The `VisibilityPolygon` class can be used to compute the visibility polygon from a point inside of a simple polygon (given as n vertices in counterclockwise order) in O(n) time and space. Here is an example:
 
