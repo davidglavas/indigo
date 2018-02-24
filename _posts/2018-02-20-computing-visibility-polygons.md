@@ -135,7 +135,7 @@ The algorithm can also be used to create the illusion of computing the visibilit
 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-02-20-computing-visibility-		polygons/HMSExample.PNG">
+  <img src="https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-02-20-computing-visibility-polygons/HMSExample.PNG">
 </p>
 
 
