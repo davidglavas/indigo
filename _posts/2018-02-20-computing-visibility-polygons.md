@@ -146,7 +146,7 @@ The algorithm can also be used to create the illusion of computing the visibilit
 ## Usage
 The `VisibilityPolygon` class can be used to compute the visibility polygon from a point inside of a simple polygon (given as n vertices in counterclockwise order) in O(n) time and space. Here is an example:
 
-``` 
+``` java
     // initialize polygon vertices in CCW order
 	List<Point2D> vertices = new ArrayList<>();
 	vertices.add(new Point2D.Double(-2, 2));
