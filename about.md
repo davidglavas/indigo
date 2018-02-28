@@ -4,10 +4,12 @@ layout: page
 headerImage: true
 ---
 
-
+<!-- 
+Read more: https://html.com/tags/comment-tag/#ixzz58Mbwe05R
 <p align="center">
   <img src="http://www.text2image.com/user_images/text2image_Z21925_20180222_034210.jpg">
 </p>
+-->
 
 Hi, my name is David and I'm a third year computer science undergraduate at [TUM](https://www.tum.de/nc/en/homepage/). 
 
