@@ -5,8 +5,8 @@ date: 2018-02-20 12:34
 mathjax: true
 headerImage: true
 tag:
-- markdown
-- elements
+- algorithms
+- computational geometry
 star: true
 category: blog
 author: davidglavas
@@ -31,7 +31,7 @@ There are many different types of [visibility problems](https://en.wikipedia.org
 **Problem Statement.** Given a viewpoint $z$ inside of a simple polygon $P$ with $n$ vertices, we want to compute the visibility polygon $VP(P, z)$, which consists of all points in $P$ visible from the viewpoint $z$. We say that point $p$ is visible from point $q$ (and conversely, $q$ is visible from $p$) if and only if the line segment $\overline{pq}$ lies completely in $P$.
 
 ## Background
-The visibility polygon from a single viewpoint $z$ can be computed naively in $\mathcal{O}(n^2)$ time. Simply cast a ray from $z$ towards every vertex of the polygon $P$ in, let's say, counter-clockwise order. For each ray we iterate through all edges and store the closest (euclidian distance to $z$) intersection as a vertex of the visibility polygon. Correctness follows from the observation that the visibility polygons boundary changes its shape only due to vertices of the polygon.
+The visibility polygon from a single viewpoint $z$ can be computed naively in $\mathcal{O}(n^2)$ time. Simply cast a ray from $z$ towards every vertex of the polygon $P$ in, let's say, counter-clockwise order. For each ray we iterate through all edges and store the closest (Euclidian distance to $z$) intersection as a vertex of the visibility polygon. Correctness follows from the observation that the visibility polygon's boundary changes its shape only due to vertices of the polygon.
 
 The above approach is simple yet computationally inefficient for large polygons. Fortunately, more efficient algorithms have been published. For example [Asano's](https://search.ieice.org/bin/summary.php?id=e68-e_9_557) $\mathcal{O}(nlogn)$ time sweeping algorithm and [Joe and Simpson's](https://cs.uwaterloo.ca/research/tr/1985/CS-85-38.pdf) $\mathcal{O}(n)$ time algorithm (yes, those are the ones used by [CGAL](https://arxiv.org/pdf/1403.3905.pdf)). 
 
@@ -74,19 +74,19 @@ The preprocessing will shift the polygon such that the viewpoint $z$ becomes the
 ```
 
 ### Main Idea
-Then the algorithm proceeds towards its three main procedures---*Advance*, *Retard*, and *Scan*---that handle the three different scenarios that can occur during the monotone scan of $V$---that is, of $P's$ boundary. While iterating through $V$, a stack $S = s_0, s_1, \cdots, s_t$ of vertices is maintained---it represents a possible subset of vertices of the final visibility polygon. Note that vertices in $S$ are not necessarily vertices of the final visibility polygon. The three procedures are responsible for handling vertices while iterating through $V$ such that the final content of $S$ is all the information neccessary for the postprocessing step to construct the final visibility polygon. *Advance* is responsible for pushing vertices from $V$ onto the stack $S$, *retard* for poping vertices from the $S$, and *scan* for skipping vertices in $V$ that have no business modifying $S$. Assume that $V$ is being scanned with $v_j, v_{j+1}$ as the current edge, and that $v_j$ is visible---for $v_{j+1}$ one of the following three cases can occur:
+Then the algorithm proceeds towards its three main procedures---*Advance*, *Retard*, and *Scan*---that handle the three different scenarios that can occur during the monotone scan of $V$---that is, of $P's$ boundary. While iterating through $V$, a stack $S = s_0, s_1, \cdots, s_t$ of vertices is maintained---it represents a possible subset of vertices of the final visibility polygon. Note that vertices in $S$ are not necessarily vertices of the final visibility polygon. The three procedures are responsible for handling vertices while iterating through $V$ such that the final content of $S$ is all the information necessary for the postprocessing step to construct the final visibility polygon. *Advance* is responsible for pushing vertices from $V$ onto the stack $S$, *retard* for popping vertices from the $S$, and *scan* for skipping vertices in $V$ that have no business modifying $S$. Assume that $V$ is being scanned with $v_j, v_{j+1}$ as the current edge, and that $v_j$ is visible---for $v_{j+1}$ one of the following three cases can occur:
 
 * $v_{j+1}$ is visible so that the newly discovered edge doesn't obstruct previous vertices $\implies$ *Advance* is called---it pushes $v_{j+1}$ onto $S$.
 * $v_{j+1}$ is visible and the newly discovered edge obstructs previous vertices $\implies$ *Retard* is called---it pops obstructed vertices from $S$ and pushes $v_{j+1}$.
 * $v_{j+1}$ is invisible, it's obstructed by previous vertices $\implies$ *Scan* is called---it doesn't modify $S$ and keeps iterating through $V$ until it reaches a visible vertex.
 
-The algorithm switches between the three procedures until $V$ is scanned completely---at this point $S$ contains all the necessary information to construct the final visibility polygon. The switching between procedures depends on the cummulative angular displacement of scanned vertices with respect to the viewpoint $z$---it is modified upon handling a new vertex from $V$, exactly how is described in the paper. 
+The algorithm switches between the three procedures until $V$ is scanned completely---at this point $S$ contains all the necessary information to construct the final visibility polygon. The switching between procedures depends on the cumulative angular displacement of scanned vertices with respect to the viewpoint $z$---it is modified upon handling a new vertex from $V$, exactly how is described in the paper. 
 
 ### Postprocessing
 
 The preprocessing step modified the original input polygon $P$ in order to establish assumptions made by the rest of the algorithm---mainly that the first vertex $v_{0}$ that we process is visible which eliminates the need for subsequent special cases. The main algorithm therefore worked on a modified input polygon $P'$ and viewpoint $z'$ and therefore produced $VP(P', z')$ whose coordinates correspond to $P'$ and not to our original input polygon $P$. 
 
-The postprocessing converts VP(P', z') to the corresponding visibility polygon in $P$ by taking $VP(P', z')$ and applying "inverse" operations to the ones applied to $P$ and $z$ during the preprocessing. Before shifting and rotating $VP(P', z')$ to obtain $VP(P, z)$ we have to reverse the stack's content to establish counterclockwise order---we pushed vertices onto the stack while iterating in counterclockwise order, just popping them would give us $VP(P', z') in clockwise order.
+The postprocessing converts $VP(P', z')$ to the corresponding visibility polygon in $P$ by taking $VP(P', z')$ and applying "inverse" operations to the ones applied to $P$ and $z$ during the preprocessing. Before shifting and rotating $VP(P', z')$ to obtain $VP(P, z)$ we have to reverse the stack's content to establish counterclockwise order---we pushed vertices onto the stack while iterating in counterclockwise order, just popping them would give us $VP(P', z')$ in clockwise order.
 
 ``` java
 	private static CCWPolygon postprocess(List<VertDispl> pre_s, VsRep V, Point2D z, double initAngle) {
@@ -117,15 +117,15 @@ The postprocessing converts VP(P', z') to the corresponding visibility polygon i
 
 
 
-**Time and space complexity.** Eeach vertex is scanned just once, at most two vertices are pushed onto the stack $S$ at each iteration, and popped vertices are never pushed again. This implies that $V$ and $S$ contain a linear number of vertices with respect to the input polygon's size $n$. Hence, the algorithm runs in $\mathcal(O)(n)$ time and space.
+**Time and space complexity.** Each vertex is scanned just once, at most two vertices are pushed onto the stack $S$ at each iteration, and popped vertices are never pushed again. This implies that $V$ and $S$ contain a linear number of vertices with respect to the input polygon's size $n$. Hence, the algorithm runs in $\mathcal{O}(n)$ time and space.
 
 
-**What I left out.** The degenerate cases and intricacies regarding the angular displacement and how this affects the switching between *advance*, *scan*, and *retard* with a detailed example on how exactly this algorithm avoids errors made by previously published algorithms is contained in the paper. It also contains the rationale that justifies the use of angular displacements and of course a proof of the algortihm's correctness.
+**What I left out.** The degenerate cases and intricacies regarding the angular displacement and how this affects the switching between *advance*, *scan*, and *retard* with a detailed example on how exactly this algorithm avoids errors made by previously published algorithms is contained in the paper. It also contains the rationale that justifies the use of angular displacements and of course a proof of the algorithm's correctness.
 
 ## Tests
 I included tests of the pre- and post-processing steps, see `TestPreprocessing.java` and `TestVisibilityPol.java` for details. All of the following visualizations can be reproduced via the `DrawVisibilityPolygons.java` file.
 
-Given the inpout polygon $P$ and a viewpoint $z$ I created tests for the following six scenarios. The polygon can be either convex or concave, for both types $z$ can be in $P$'s interior, or on an edge of $P$'s boundary, or on one of $P$'s vertices. The following figures are visualizations of those six scenarios.
+Given the input polygon $P$ and a viewpoint $z$ I created tests for the following six scenarios. The polygon can be either convex or concave, for both types $z$ can be in $P$'s interior, or on an edge of $P$'s boundary, or on one of $P$'s vertices. The following figures are visualizations of those six scenarios.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-02-20-computing-visibility-polygons/ConvexVisibilityFigure1.jpg">
@@ -202,4 +202,4 @@ Therefore, the algorithm's robustness issues could be partially resolved by repl
 
 ### Summary
 
-In this post we discussed the gist behind Joe and Simpson's algorithm for computing the visibility polygon from a viewpoint inside of a simple polygon and concluded by taking a look at the robustness issues of my implementation. We saw how to establish assumptions about the input that were made in the paper---the preprocessing step. Then, we discussed the main idea behind the three routines---Advance, Retard and Scan---and in what manner they modify the stack. We took a look at how the final visibility polygon is constructed using the stack's content left by the three subroutines after the algorithmwhere finished iterating through the polygon's boundary---the postprocessing step. We concluded with a discussion on robustness issues wherw we saw an approach to resolve them---multiprecision library--- and an idea for future work that makes use of adaptive predicates.
+In this post we discussed the gist behind Joe and Simpson's algorithm for computing the visibility polygon from a viewpoint inside of a simple polygon and concluded by taking a look at the robustness issues of my implementation. We saw how to establish assumptions about the input that were made in the paper---the preprocessing step. Then, we discussed the main idea behind the three routines---Advance, Retard and Scan---and in what manner they modify the stack. We took a look at how the final visibility polygon is constructed using the stack's content left by the three subroutines after the algorithm finished iterating through the polygon's boundary---the postprocessing step. We concluded with a discussion on robustness issues where we mentioned an approach to resolve them---arbitrary-precision arithmetic ---and an idea for future work that makes use of adaptive predicates.
