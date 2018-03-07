@@ -19,9 +19,7 @@ description: I discuss my implementation of an algorithm for computing visibilit
 
 
 ## TL;DR
-
-I discuss the gist and limitations of my [implementation](https://github.com/davidglavas/Visibility-Polygons-by-Joe-Simpson) (Java) of Joe and Simpson's [visibility polygon algortihm](https://cs.uwaterloo.ca/research/tr/1985/CS-85-38.pdf), that is, an asymptotically optimal algorithm for computing the visibility polygon from a point inside of a simple polygon.
-
+I discuss the gist and limitations of my [implementation](https://github.com/davidglavas/Visibility-Polygons-by-Joe-Simpson) of Joe and Simpson's [visibility polygon algortihm](https://cs.uwaterloo.ca/research/tr/1985/CS-85-38.pdf), that is, an asymptotically optimal algorithm for computing the visibility polygon from a point inside of a simple polygon.
 
 ## The Problem
 Recently, I took a course on computational geometry and got interested in the notion of visibility. Besides its applications in hidden surface removal (HSR) algorithms and exact robot motion planning, it received a great amount of attention through the art gallery problem. The first application I could think of when thinking about visibility were video games that incorporated a [fog of war](https://legends2k.github.io/2d-fov/), that is, the computation of a player's surroundings that is visible to him as he navigates a map. Unfortunately, the algorithm we will be talking about doesn't work with obstacles, making it of limited use in games.
