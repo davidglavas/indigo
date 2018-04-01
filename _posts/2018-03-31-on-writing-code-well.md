@@ -92,30 +92,29 @@ Keep the above idea—thinking the problem through at the level of intent and on
 
 ### Tips for Constructing Classes:
 1.	Create a general design for the class.
-	-	Define the class’s responsibilities.
-	-	Define what information the class will hide.
-	-	Define exactly what abstraction the class interface will capture.
-	-	Include the last three points as a comment in the source code if possible.
-	-	Make sure that the class’s interface represents a consistent abstraction. (ex. If you offer a `findEmployee()` routine, it shouldn’t throw an `EOFException` but an `EmployeeNotFoundException`)
-	- 	Determine whether the class will be derived from another class and whether other classes will be allowed to derive from it.
-	-	Identify key public methods.
-	-	Identify and design nontrivial data structures.
-	-	Minimize accessibility, avoid exposing data and functionality when it’s not necessary to do so.
-	-	Minimize coupling to other classes, avoid depending on code outside of the class as much as practically possible.
-	-	Preserve integrity of the class’s interface and documentation as you modify it.
+	- Define the class’s responsibilities.
+	- Define what information the class will hide.
+	- Define exactly what abstraction the class interface will capture.
+	- Include the last three points as a comment in the source code if possible.
+	- Make sure that the class’s interface represents a consistent abstraction. (ex. If you offer a `findEmployee()` routine, it shouldn’t throw an `EOFException` but an `EmployeeNotFoundException`)
+	- Determine whether the class will be derived from another class and whether other classes will be allowed to derive from it.
+	- Identify key public methods.
+	- Identify and design nontrivial data structures.
+	- Minimize accessibility, avoid exposing data and functionality when it’s not necessary to do so.
+	- Minimize coupling to other classes, avoid depending on code outside of the class as much as practically possible.
+	- Preserve integrity of the class’s interface and documentation as you modify it.
 
 2.	Construct the routines within the class.
-	-	Follow steps for constructing routines (see below).
-
+	- Follow steps for constructing routines (see below).
 3.	Review and test the class as a whole.
-	-	Ideally, each routine is tested as it’s created. After the class starts taking shape it should be reviewed and tested as a whole in order to uncover any issues that can’t be tested at the individual routine level.
+	- Ideally, each routine is tested as it’s created. After the class starts taking shape it should be reviewed and tested as a whole in order to uncover any issues that can’t be tested at the individual routine level.
 
 4.	Repeat if necessary.
-	-	As most other processes in software engineering, this is by no means a linear process. For example, during construction of the individual routines (step 2), design errors—such as the need for additional routines—might become apparent. If so, go back to designing the class (step 1) before continuing with construction.
-	-	Iterate until you are satisfied.
+	- As most other processes in software engineering, this is by no means a linear process. For example, during construction of the individual routines (step 2), design errors—such as the need for additional routines—might become apparent. If so, go back to designing the class (step 1) before continuing with construction.
+	- Iterate until you are satisfied.
 
 ### Tips for Constructing Routines:
-1.	Design the routine.
+1. Design the routine.
 	- **Clearly** define the problem the routine is supposed to solve.
 	- Name the routine such that the problem it solves is apparent.
 	- Define information that the routine will hide.
@@ -125,32 +124,32 @@ Keep the above idea—thinking the problem through at the level of intent and on
 	- Research available algorithms and data structures, don’t reinvent wheels.
 	- Summarize the routines job. Use the summary as a comment in the routines header. Ideally, the reader could treat the routine as a black box and only go into the implementation details if necessary.
 	- Write the pseudocode (level of intent).
+<br />
 
-2.	Code the routine.
-	-	Convert the pseudocode into actual code.
-	-	Errors in the pseudocode might become more apparent while converting it to actual code. Expect to go back designing the routine (step 1) if you uncover serious errors that impact the whole routine.
+2. Code the routine.
+	- Convert the pseudocode into actual code.
+	- Errors in the pseudocode might become more apparent while converting it to actual code. Expect to go back designing the routine (step 1) if you uncover serious errors that impact the whole routine.
+<br />
 
-3.	Review and test the code and design.
-	-	Mentally check your routine for errors. 
-	-	Does the pseudocode fully solve your problem?
-	-	Does the code correspond to the pseudocode? 
-	-	Step through your routine with a debugger. This step is so underrated. If you fully understand the routine you just wrote then it shouldn’t take much effort to go through it with a debugger.
-	-	Test your routine.
+3. Review and test the code and design.
+	- Mentally check your routine for errors. 
+	- Does the pseudocode fully solve your problem?
+	- Does the code correspond to the pseudocode? 
+	- Step through your routine with a debugger. This step is so underrated. If you fully understand the routine you just wrote then it shouldn’t take much effort to go through it with a debugger.
+	- Test your routine.
+<br />
 
-4.	Repeat if necessary.
-	-	Expect to heavily iterate over the above steps. You will often have to go into the details and implement some pseudocode to validate your approach, then you go back to the pseudocode, then back into implementation details and so on. Just make sure to minimize the time you spend with implementation details. Only implement things to support your reasoning on the pseudocode level, save time and avoid reasoning at the implementation level. 
-	-	Iterate until you are satisfied.
+4. Repeat if necessary.
+	- Expect to heavily iterate over the above steps. You will often have to go into the details and implement some pseudocode to validate your approach, then you go back to the pseudocode, then back into implementation details and so on. Just make sure to minimize the time you spend with implementation details. Only implement things to support your reasoning on the pseudocode level, save time and avoid reasoning at the implementation level. 
+	- Iterate until you are satisfied.
 
 Tips for testing routines:
--	Think about how you will test the routine, both before and as you write it. This tends to result in a modular design and often uncovers errors sooner.
--	Test all branches of your routine (ex. if you have a switch statement, test all cases).
--	Boundary analysis, test values +1, -1, and equal to boundaries to avoid off by one errors.
--	Dirty tests, check if your code fails when it should (too little/much data, invalid data, etc.)
--	Consider generating random inputs.
--	Ensure compatibility with old tests if available.
-
-<br/>
-
+- Think about how you will test the routine, both before and as you write it. This tends to result in a modular design and often uncovers errors sooner.
+- Test all branches of your routine (ex. if you have a switch statement, test all cases).
+- Boundary analysis, test values +1, -1, and equal to boundaries to avoid off by one errors.
+- Dirty tests, check if your code fails when it should (too little/much data, invalid data, etc.)
+- Consider generating random inputs.
+- Ensure compatibility with old tests if available.
 
 I know, I know. Pre- and post-conditions? Pseudocode? Stepping through with a debugger? For every routine? The above tips sound tedious (they are) and your job is to ship code, that’s [fine]( https://blog.codinghorror.com/not-all-bugs-are-worth-fixing/). The above tips are suggestions to bring more structure into our thought process. Being aware of these optional steps and where they fit into our coding habits is in itself valuable.
 
