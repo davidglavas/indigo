@@ -7,7 +7,7 @@ headerImage: true
 tag:
 - algorithms
 - computational geometry
-star: true
+star: false
 category: blog
 author: davidglavas
 description: I discuss my implementation of an algorithm for computing visibility polygons in linear time.
