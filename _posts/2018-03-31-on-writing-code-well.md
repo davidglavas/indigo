@@ -8,7 +8,7 @@ tag:
 - code complete 2
 - on writing well
 - software engineering advice
-star: true
+star: false
 category: blog
 author: davidglavas
 description: I point out similarities between programming and writing nonfiction based on interchangeable advice in Steve McConnell’s Code Complete and William Zinsser’s On Writing Well.
