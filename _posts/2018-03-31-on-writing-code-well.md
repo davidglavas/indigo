@@ -51,7 +51,6 @@ In the rest of this post I’ll cover McConnell’s advice on three points which
 
 ## 1. Clarify your thoughts first
 
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-03-31-on-writing-code-well/Clear.jpg">
 </p>
@@ -104,10 +103,9 @@ Keep the above idea—thinking the problem through at the level of intent and on
 	- Minimize coupling to other classes, avoid depending on code outside of the class as much as practically possible.
 	- Preserve integrity of the class’s interface and documentation as you modify it.
 
-<br/>
-
 2.	Construct the routines within the class.
 	- Follow steps for constructing routines (see below).
+	
 3.	Review and test the class as a whole.
 	- Ideally, each routine is tested as it’s created. After the class starts taking shape it should be reviewed and tested as a whole in order to uncover any issues that can’t be tested at the individual routine level.
 
