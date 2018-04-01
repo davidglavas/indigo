@@ -53,7 +53,7 @@ In the rest of this post I’ll cover McConnell’s advice on three points which
 
 
 <p align="center">
-  <img src="https://i1.wp.com/www.susankingsleysmith.com/wp-content/uploads/2015/08/image1.jpg?w=750">
+  <img src="https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-03-31-on-writing-code-well/Clear.jpg">
 </p>
 
 Clear minds tend to write clear sentences and produce clear code.
@@ -103,6 +103,8 @@ Keep the above idea—thinking the problem through at the level of intent and on
 	- Minimize accessibility, avoid exposing data and functionality when it’s not necessary to do so.
 	- Minimize coupling to other classes, avoid depending on code outside of the class as much as practically possible.
 	- Preserve integrity of the class’s interface and documentation as you modify it.
+
+<br/>
 
 2.	Construct the routines within the class.
 	- Follow steps for constructing routines (see below).
@@ -156,7 +158,7 @@ I know, I know. Pre- and post-conditions? Pseudocode? Stepping through with a de
 ## 2. Keep it simple
 
 <p align="center">
-  <img src="https://static1.squarespace.com/static/584579603e00be884523e4ed/t/5a087dc971c10b6a451acbeb/1510580829068/?format=2500w">
+  <img src="https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-03-31-on-writing-code-well/Simple.jpe">
 </p>
 
 Lots of advice specific to writing nonfiction or writing code can be reduced to this: keep it simple.
@@ -299,7 +301,7 @@ Most of this advice is there to keep developers from writing code that’s more 
 ## 3. Iterate, iterate, and iterate again
 
 <p align="center">
-  <img src="https://cdn-images-1.medium.com/max/1000/1*gBLsSYp3M9gYhsgprRHVww.jpeg">
+  <img src="https://raw.githubusercontent.com/davidglavas/davidglavas.github.io/master/_posts/Figures/2018-03-31-on-writing-code-well/Iterate.jpeg">
 </p>
 
 Books, articles, blogposts and non-trivial systems aren’t written in one go. Both authors emphasize the importance of heavily iterating over their work.
