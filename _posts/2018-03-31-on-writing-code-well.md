@@ -124,11 +124,13 @@ Keep the above idea—thinking the problem through at the level of intent and on
 	- Research available algorithms and data structures, don’t reinvent wheels.
 	- Summarize the routines job. Use the summary as a comment in the routines header. Ideally, the reader could treat the routine as a black box and only go into the implementation details if necessary.
 	- Write the pseudocode (level of intent).
+
 <br />
 
 2. Code the routine.
 	- Convert the pseudocode into actual code.
 	- Errors in the pseudocode might become more apparent while converting it to actual code. Expect to go back designing the routine (step 1) if you uncover serious errors that impact the whole routine.
+
 <br />
 
 3. Review and test the code and design.
@@ -137,6 +139,7 @@ Keep the above idea—thinking the problem through at the level of intent and on
 	- Does the code correspond to the pseudocode? 
 	- Step through your routine with a debugger. This step is so underrated. If you fully understand the routine you just wrote then it shouldn’t take much effort to go through it with a debugger.
 	- Test your routine.
+
 <br />
 
 4. Repeat if necessary.
