@@ -37,13 +37,13 @@ So is there a connection between programming and nonfiction writing? If so, then
 
 For the following four quotes, try and guess to which of the two books each of them belongs:
 
-> Look for the clutter and prune it ruthlessly. Be grateful for everything you can throw away. Are you hanging on to something useless just because you think it’s beautiful? Simplify, simplify.
+> "Look for the clutter and prune it ruthlessly. Be grateful for everything you can throw away. Are you hanging on to something useless just because you think it’s beautiful? Simplify, simplify."
 
-> The point is that you have to strip your work down before you can build it back up. You must know what the essential tools are and what job they were designed to do.
+> "The point is that you have to strip your work down before you can build it back up. You must know what the essential tools are and what job they were designed to do."
 
-> Sometimes you will despair of finding the right solution—or any solution. You’ll think, “If I live to be ninety I’ll never get out of this mess.” I’ve often thought it myself. But when I finally do solve the problem it’s because I’m like a surgeon removing his 500th appendix; I’ve been there before.
+> "Sometimes you will despair of finding the right solution—or any solution. You’ll think, “If I live to be ninety I’ll never get out of this mess.” I’ve often thought it myself. But when I finally do solve the problem it’s because I’m like a surgeon removing his 500th appendix; I’ve been there before."
 
-> When you find yourself in such a situation, look at the troublesome element and ask, “Do I need it at all?” Probably you don’t. It was trying to do an unnecessary job all along.
+> "When you find yourself in such a situation, look at the troublesome element and ask, “Do I need it at all?” Probably you don’t. It was trying to do an unnecessary job all along."
 
 If you guessed *On Writing Well* four times then well done. The point is that these statements could easily fit into both books. Let’s interpret the interchangeability of these (and many other) statements as proof for the existence of a connection between programming and non-fiction writing. 
 
@@ -58,7 +58,7 @@ In the rest of this post I’ll cover McConnell’s advice on three points which
 
 Clear minds tend to write clear sentences and produce clear code.
 
-> Writers must therefore constantly ask: what am I trying to say? Surprisingly often they don’t know. Then they must look at what they have written and ask: have I said it? Is it clear to someone encountering the subject for the first time? If it’s not, some fuzz has worked its way into the machinery. The clear writer is someone clearheaded enough to see this stuff for what it is: fuzz.” 
+> Writers must therefore constantly ask: what am I trying to say? Surprisingly often they don’t know. Then they must look at what they have written and ask: have I said it? Is it clear to someone encountering the subject for the first time? If it’s not, some fuzz has worked its way into the machinery. The clear writer is someone clearheaded enough to see this stuff for what it is: fuzz.
 >
 > — <cite>William Zinsser</cite>  
 <br/>
