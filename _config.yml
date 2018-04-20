@@ -12,7 +12,7 @@ picture: https://avatars3.githubusercontent.com/u/18364494?s=400&v=4
 
 # If you want to include your resume, set to true
 # and specify source (external or local).
-resume: true
+resume: false
 resume-external: false
 resume-url: davidglavas.github.io/assets/DavidGlavasResume.pdf
 
