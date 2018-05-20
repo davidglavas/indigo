@@ -27,23 +27,23 @@ For this post, our goal is learning how to:
 
 
 
-We will start by taking a look the dataset. Then, we will learn how to extract meaningful information from audio signals to obtain a compact and expressive description that the classifier can use. Then, we will learn how to use TensorFlow’s estimator API to build a simple neural network with which we will classify the extracted features. Finally, we will learn how to run experiments, interpret the results, and use what we have learned in future projects.
+We will start by taking a look the dataset. Then, we will learn how to extract meaningful information from audio signals to obtain a compact, yet expressive description that the classifier can use. Then, we will learn how to use TensorFlow’s estimator API to build a simple neural network with which we will classify the extracted features. Finally, we will learn how to run experiments, interpret the results, and use what we have learned in future projects.
 
 ## The Data
-In order for our neural network to generalize well we need a sufficiently large amount of varied labeled data. Creating such datasets is challenging as it usually involves first finding quality sources of data, then setting up a system to automate the collection process from various sources, and finally manually labeling the data. [Salamon and Bello](https://serv.cusp.nyu.edu/projects/urbansounddataset/salamon_urbansound_acmmm14.pdf) did just that. Their efforts resulted in the [UrbanSound8K dataset](https://serv.cusp.nyu.edu/projects/urbansounddataset/urbansound8k.html), which we will use in this post. I chose this dataset because it is relatively large and easy to work with. 
+In order for the neural network to generalize well we need a sufficiently large amount of varied labeled data. Creating such datasets is challenging as it usually involves first finding quality sources of data, then setting up a system to automate the collection process from various sources, and finally manually labeling the data. [Salamon and Bello](https://serv.cusp.nyu.edu/projects/urbansounddataset/salamon_urbansound_acmmm14.pdf) did just that. Their efforts resulted in the [UrbanSound8K dataset](https://serv.cusp.nyu.edu/projects/urbansounddataset/urbansound8k.html), which we will use in this post. I chose this dataset because it is relatively large and easy to work with. 
 
-The UrbanSound8K dataset is a collection of 8732 short (~4 second) labeled audio recordings (.wav files) of various urban sounds. Each recording belongs to one of the following 10 classes: air_conditioner, car_horn, children_playing, dog_bark, drilling, enginge_idling, gun_shot, jackhammer, siren, or street_music. The names of the audio files contain various meta-data of which we will use the class id—label of each audio recording is contained in the file name. The recordings are conveniently pre-sorted into 10 folds to help with the reproduction and comparison of results.
+The UrbanSound8K dataset is a collection of 8732 short (~4 second) labeled audio recordings (.wav files) of various urban sounds. Each recording belongs to one of the following 10 classes: air_conditioner, car_horn, children_playing, dog_bark, drilling, enginge_idling, gun_shot, jackhammer, siren, or street_music. The names of the audio files contain various meta-data of which we will use the class id, in other words, the label of each audio recording is contained in the file name. The recordings are conveniently pre-sorted into 10 folds to help with the reproduction and comparison of results.
 
 ## Feature Extraction
 In this section we will turn our audio recordings into feature vectors. We do this because of the network structure we use to build the audio classifier—our data must conform to the input layer’s structure. Hence, we need to turn our audio recordings into arrays of floating point numbers—the feature vectors.
 
 We must also keep in mind that the length of our feature vector is equal to the number of units in the network’s input layer—we therefore have full control over it. However, the cost of training a network (time and compute) usually increases with the number of units in the network. Therefore we will try to keep our feature vectors as small as possible.
 
-A major challenge during the development of audio classifiers is the identification of appropriate content-based features for the representation of the audio recordings. The exact number of different features that people have used up to this point is unknown and irrelevant--the point is that there’s a lot of different ways to concisely represent audio signals, [this](https://www.sciencedirect.com/science/article/pii/S0065245810780037) is a great overview of the most used features. Choosing which feature(s) to extract depends on the nature of the audio sources. Different types of audio sources have different characteristics, the goal is to find features that captures relevant differences between our audio recordings which then the neural network can use during classification.
+A major challenge during the development of audio classifiers is the identification of appropriate content-based features for the representation of the audio recordings. The exact number of different features that people have used up to this point is unknown and irrelevant--the point is that there’s a lot of different ways to concisely represent audio signals, [this](https://www.sciencedirect.com/science/article/pii/S0065245810780037) is a great overview of the most used features. Choosing which feature(s) to extract depends on the nature of the audio sources. Different types of audio sources have different characteristics, the goal is to find features that capture relevant differences between our audio recordings which then the neural network can use during classification.
 
 Our recordings are a kind of environmental sound. An overview of effective features for such audio recordings can be found [here]( https://ac.els-cdn.com/S0167865503001478/1-s2.0-S0167865503001478-main.pdf?_tid=8901d567-2f27-44bd-ba5b-b48290fd89c8&acdnat=1525870758_f2ee1c0c2b690073c98a4232873a5974). The feature we will use is inspired by the human auditory system and has proven to be very effective—the Mel-frequency cepstrum (MFC). For the purposes of this post we need to know that we extract one MFC per audio recording, that an MFC is made up of Mel-frequency cepstral coefficients (MFCCs), and that an MFC can be stored as a matrix. Each column in an MFCC matrix represents the MFCCs for one frame, and each row represents the extracted MFCCs across all frames (note that some other libraries reverse the columns and rows). So an MFCC matrix is a sequence of MFCCs. In case you are interested how the matrix is computed, see [this](http://www.practicalcryptography.com/miscellaneous/machine-learning/guide-mel-frequency-cepstral-coefficients-mfccs/). Next we will describe how to turn the MFCC matrix into a feature vector by summarizing the extracted sqeuences of MFCCs (rows).
 
-Let’s assume that we extracted all the MFCCs for our audio recordings, now we have one matrix per audio recording which is supposed to be a good representation of the recording’s content. Finally, we will obtain the feature vectors by summarizing each MFCC matrix into one vector. For example, we can summarize one MFCC matrix into a feature vector by computing the mean of every row—the length of this feature vector would be equal to the number of coefficients (rows in the matrix). We will go a step further and use multiple summary statistics (minimum, maximum, median, mean, variance, skewness, kurtosis) and obtain the final feature vector by concatenating the vectors we obtained for each of the summary statistics. Therefore, the length of our final feature vector will be the number of coefficients (rows) in our MFCC matrix multiplied by the number of summary statistics we use—in our case we have a feature vector of length 20 * 7 = 140. Note that I chose 20 as the number of coefficients through experimenting with different values.
+Let’s assume that we extracted all the MFCCs for our audio recordings, now we have one matrix per audio recording which is supposed to be a good representation of the recording’s content. Finally, we will obtain the feature vectors by summarizing each MFCC matrix into one vector. For example, we can summarize one MFCC matrix into a feature vector by computing the mean of every sequence of MFCCs (row in the matrix)—the feature vector would be made up of the means and its length would be equal to the number of MFCCs seqeuences (rows in the matrix). We will go a step further and use multiple summary statistics (minimum, maximum, median, mean, variance, skewness, kurtosis) and obtain the final feature vector by concatenating the vectors we obtained for each of the summary statistics. Therefore, the length of our final feature vector will be the number of coefficients (rows) in our MFCC matrix multiplied by the number of summary statistics we use—in our case we have a feature vector of length 20 * 7 = 140. Note that I chose 20 as the number of coefficients through experimenting with different values.
 
 To extract the features we will use [LibROSA](https://librosa.github.io/librosa/index.html)—a package for music and audio analysis. Given the path to one of the recordings, we can compute the corresponding MFCC matrix and create our feature vector as follows:
 
@@ -246,7 +246,7 @@ def mean_normalize(featureMatrix):
 
 The feature extraction phase tends to take long—my PC takes about 6 minutes to extract feature vectors of length 140 for one fold of the UrbanSound8K dataset. We will store the extracted features. This way we only need to pay the price of extracting features once, and can reuse them while experimenting during classification later on. 
 
-I plan to do a 10-fold cross validation, the following two functions make it easy to extract and store the features systematically. I use $extract_feature_from_directories$ to iterate through the folds and extract features from the recordings they contain--all the extracted feature vectors are combined into one feature matrix (rows are feature vectors, columns are features). 
+I plan to do a 10-fold cross validation, the following two functions make it easy to extract and store the features systematically. I use `extract_feature_from_directories` to iterate through the folds and extract features from the recordings they contain--all the extracted feature vectors are combined into one feature matrix (rows are feature vectors, columns are features). 
 
 ``` python
 def extract_features_from_directory(parent_dir, sub_dirs, file_ext="*.wav"):
@@ -280,7 +280,7 @@ def extract_features_from_directory(parent_dir, sub_dirs, file_ext="*.wav"):
     return np.array(feature_matrix), np.array(labels, dtype=np.int)
 ```
 
-I use $prepare_features$ to extract and store the training and validation set for one run of the 10-fold cross validation. 
+I use `prepare_features` to extract and store the training and validation set for one run of the 10-fold cross validation. 
 
 ``` python
 def prepare_features(training_dirs, validation_dirs, training_name, validation_name):
@@ -319,7 +319,7 @@ def prepare_features(training_dirs, validation_dirs, training_name, validation_n
 The following snippet uses the above functions to create the training and validation sets that are used during the first run of the 10-fold cross-validation:
 
 ``` python
-# First 9 folds will be used for training, the tenth for validation.
+# On the first run I use the first 9 folds for training, the tenth for validation.
 training_dirs = ["fold1", "fold2", "fold3", "fold4", "fold5", "fold6", "fold7", "fold8", "fold9"]
 validation_dirs = ["fold10"]
 
@@ -330,7 +330,7 @@ prepare_features(training_dirs, validation_dirs, 'notFold10', 'fold10')
 To summarize, we extracted one MFCC matrix per recording. The features we will use during classification are the summary statistics of the MFCC matrix’s coefficients (rows). By concatenating the different summaries of the MFCC matrix we obtain a compact representation of the original audio recording—the final feature vector. Next, we will discuss the classification phase and how the neural network will use the feature vectors we developed in this section.
 
 ## Classification
-In this section we will use a neural network to classify the audio recordings. We want to classify each audio recording into one of $10$ classes mentioned earlier. Hence, we are dealing with a multi-class classification problem where the classes are mutually exclusive (a recording can belong to only one class). Therefore, we want to build a neural network with a softmax layer at the top.
+In this section we will use a neural network to classify the audio recordings. We want to classify each audio recording into one of 10 classes mentioned earlier. Hence, we are dealing with a multi-class classification problem where the classes are mutually exclusive (a recording can belong to only one class). Therefore, we want to build a neural network with a softmax layer at the top.
 
 Our goal is to create a simple but flexible framework which we can use for experiments. We want to control hyperparameters such as the learning rate, the regularization strength, the number of steps the optimization algorithm makes, the batch size, the number of hidden layers, and the number of hidden units in each layer. We also want to leave the doors open for trying out different types of regularization (L1, L2, Dropout), activation functions, to change the number of classes, and to test different optimization algorithms. We want this flexibility while minimizing the number of errors when switching between configurations during experiments. We don’t want to deal with issues such as the initialization of weights, connecting individual units, and cost functions. We are fine with reasonable defaults, as long as it allows for enough freedom to quickly try out interesting configurations.
 
@@ -408,7 +408,7 @@ def create_predict_input_fn(features, labels, batch_size):
     return _input_fn
 ```
 
-Next we will define the function that will train the model while periodically printing loss metrics to guide our hyperparameter search during experiments. We will divide the number of training steps into 10 periods. For each period, we train the $DNNClassifier$ for $steps/10$ steps. Then we print loss metrics and continue with the next period. We repeat this 10 times, each time we continue training the $DNNClassifier$ where the previous period left off. The last period gives us the final $DNNClassifier$ which represents our final model.
+Next we will define the function that will train the model while periodically printing loss metrics to guide our hyperparameter search during experiments. We will divide the number of training steps into 10 periods. For each period, we train the `DNNClassifier` for $steps/10$ steps. Then we print loss metrics and continue with the next period. We repeat this 10 times, each time we continue training the `DNNClassifier` where the previous period left off. The last period gives us the final `DNNClassifier` which represents our final model.
 
 ``` python
 def train_nn_classification_model(
@@ -567,12 +567,13 @@ classifier = train_nn_classification_model(
     validation_examples=validation_examples,
     validation_targets=validation_targets)
  ```
- 
- ## Results
 
-In order to estimate how a certain model configuration will perform on unseen data we will do a 10-fold cross-validation using the already provided folds in the UrbanSound8K dataset. My machine takes about 4 minutes (on average across different configurations with 1 layer) to train a $DNNClassifier$ on 9 folds and evaluate it on 1 fold. A 10 fold cross-validation takes my machine about 40 minutes. This severely limits my hyperparameter search, I therefore searched for a good model configuration while training on 9 folds and validating on 1. Then, once I found a configuration which performed well, I ran a 10-fold cross-validation to see how it generalizes.
 
-To perform a 10-fold cross-validation we first have to load the features we extracted and stored earlier. Then we use the training function to train a model for the different folds:
+## Results
+
+In order to estimate how a certain model configuration will perform on unseen data we will do a 10-fold cross-validation using the already provided folds in the UrbanSound8K dataset. My machine takes about 4 minutes (on average across different configurations with 1 layer) to train a `DNNClassifier` on 9 folds and evaluate it on 1 fold. A 10 fold cross-validation takes my machine about 40 minutes. This severely limits my hyperparameter search, I therefore searched for a good model configuration while training on 9 folds and validating on 1. Then, once I found a configuration which performed well, I ran a 10-fold cross-validation to see how it generalizes.
+
+To perform a 10-fold cross-validation we first have to load the features we extracted and stored earlier. Then we use the training function to train models for the different folds:
 
 ``` python
 def k_fold_cross_validation(training_set_names, validation_set_names):
@@ -628,7 +629,7 @@ def k_fold_cross_validation(training_set_names, validation_set_names):
     return examples, labels  
  ```
 
-Finally, we perform the 10-fold cross validation by specifying the folds and calling the above $k_fold_cross_validation$ function. Note that the $k$ is equal to the number of pairs in $training_set_names$ and $validation_set_names$. Further, the first cross validation run will use the first tuple in $training_set_names$ (corresponds to the first 9 folds) for training, and the first tuple in $validation_set_names$ (corresponds to the tenth fold) for validation. Similarly for the rest of the runs.
+Finally, we perform the 10-fold cross validation by specifying the folds and calling the above `k_fold_cross_validation` function. Note that the `k` is equal to the number of pairs in `training_set_names` and `validation_set_names`. Further, the first cross validation run will use the first tuple in `training_set_names` (corresponds to the first 9 folds) for training, and the first tuple in `validation_set_names` (corresponds to the tenth fold) for validation. Similarly for the rest of the runs.
 
 ``` python
 # order in training_set_names matches the order in validation_set_names
@@ -685,9 +686,6 @@ While trying to compare results I found only one [article]( http://iaser.org/Vol
 
 Note that there are much better approaches for classifying the UrbanSound8K dataset. I used a simple fully connected neural network with one layer and few hidden units due to hardware constraints. The most common deep learning based approach for classification of sounds is to convert the audio file to an image (ex. spectrogram, MFCC, CRP), and then use a convolutional neural network to classify the image. The best classification accuracy on the UrbanSound8K dataset I could find is 93%, the approach is described [here](https://www.sciencedirect.com/science/article/pii/S1877050917316599).
 
-The approach I used in this post is by no means a good one when it comes to maximizing classification performance. It's great for learning because it can easily be transferred to similar problems to get working prototypes quickly. In case you wish to use a different dataset of audio recordings you could research what features work well for your data and adapt the feature extraction process. In case you use fewer or more classes, simply change the $n_classes$ parameter. In case you want to try out more layers and/or units, simply change the $hidden_units$ parameter. You can swap $l2_regularization_strength$ for $ l1_regularization_strength$ or add $dropout=0.5$ to the initialization phase of the $DNNClassifier$. You can swap the $proximalAdagradOptimizer$ with another [optimizer]( https://www.tensorflow.org/api_docs/python/tf/train/Optimizer) (ex.  $tf.train.AdagradOptimizer(learning_rate=learning_rate)$).
+The approach I used in this post is by no means a good one when it comes to maximizing classification performance. It's great for learning because it can easily be transferred to similar problems to get working prototypes quickly. In case you wish to use a different dataset of audio recordings you could research what features work well for your data and adapt the feature extraction process. In case you use fewer or more classes, simply change the `n_classes` parameter. In case you want to try out more layers and/or units, simply change the `hidden_units` parameter. You can swap `l2_regularization_strength` for `l1_regularization_strength` or add `dropout=0.5` to the initialization phase of the `DNNClassifier`. You can swap the `proximalAdagradOptimizer` with another [optimizer]( https://www.tensorflow.org/api_docs/python/tf/train/Optimizer) (ex.  `tf.train.AdagradOptimizer(learning_rate=learning_rate)`).
 
-To conclude, we learned how to use librosa to extract features from audio files. Then we learned how to build a simple but flexible framework for quick experiments with the Estimator API. Finally we learned how to evaluate results and compared it with the results of others.
-
-
-
+To conclude, we learned how to use librosa to extract features from audio files. Then we learned how to build a simple but flexible framework for quick experiments with the Estimator API. Finally we learned how to evaluate results and compared it with the results of others. Feel free to comment on what I could have done better or what you would have done differently and why.
