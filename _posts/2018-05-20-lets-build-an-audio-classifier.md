@@ -14,7 +14,7 @@ description: I use a neural network to build a simple audio classifier and evalu
 ---
 
 <p align="center">
-  <img src="https://github.com/davidglavas/davidglavas.github.io/blob/master/_posts/Figures/2018-05-20-lets-build-an-audio-classifier/classification_results.png?raw=true">
+  <img src="https://github.com/davidglavas/davidglavas.github.io/blob/master/_posts/Figures/2018-05-20-lets-build-an-audio-classifier/Pipeline.png?raw=true" width ="1100" height="230">
 </p>
 
 ## TL;DR
