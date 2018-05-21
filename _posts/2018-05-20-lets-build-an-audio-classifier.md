@@ -48,21 +48,21 @@ Let’s assume that we extracted all the MFCCs for our audio recordings, now we 
 To extract the features we will use [LibROSA](https://librosa.github.io/librosa/index.html)—a package for music and audio analysis. Given the path to one of the recordings, we can compute the corresponding MFCC matrix and create our feature vector as follows:
 
 ``` python
-def extract_feature(file_name):
+def extract_features_from_file(file_name):
     raw_sound, sample_rate = librosa.load(file_name)
 
-    # matrix with one row per extracted coefficient, one column per frame
+    # one row per extracted coefficient, one column per frame
     mfccs = librosa.feature.mfcc(y=raw_sound, sr=sample_rate, n_mfcc=20)
 
-    mfccsMin = np.min(mfccs, axis=1)  # row-wise summaries
-    mfccsMax = np.max(mfccs, axis=1)
-    mfccsMedian = np.median(mfccs, axis=1)
-    mfccsMean = np.mean(mfccs, axis=1)
-    mfccsVariance = np.var(mfccs, axis=1)
-    mfccsSkeweness = skew(mfccs, axis=1)
-    mfccsKurtosis = kurtosis(mfccs, axis=1)
+    mfccs_min = np.min(mfccs, axis=1)  # row-wise summaries
+    mfccs_max = np.max(mfccs, axis=1)
+    mfccs_median = np.median(mfccs, axis=1)
+    mfccs_mean = np.mean(mfccs, axis=1)
+    mfccs_variance = np.var(mfccs, axis=1)
+    mfccs_skeweness = skew(mfccs, axis=1)
+    mfccs_kurtosis = kurtosis(mfccs, axis=1)
 
-    return mfccsMin, mfccsMax, mfccsMedian, mfccsMean, mfccsVariance, mfccsSkeweness, mfccsKurtosis
+    return mfccs_min, mfccs_max, mfccs_median, mfccs_mean, mfccs_variance, mfccs_skeweness, mfccs_kurtosis
 ```
 
 Let’s take a closer look at a feature vector we create with the above function. Explicitly, the first feature in our feature vector is the minimum of the first coefficient (first MFCCs sequence) of the recording’s MFCC matrix. The second feature is the minimum value of the second coefficient in the recording’s MFCC matrix. Assume that the MFCC matrix has $k$ rows and start index is $1$, the $k+1$-th feature in our feature vector is the maximum (second summary statistic) value of the first coefficient in the recording’s MFCC matrix. The $2k+1$-th feature is the median of the first coefficient in the recording’s MFCC matrix. And so on for the rest of the summary statistics we chose: the $m$-th summary statistic makes up the $k$ features starting from the $(m-1)*k + 1$-th feature in the feature vector.
@@ -70,50 +70,58 @@ Let’s take a closer look at a feature vector we create with the above function
 The following example shows how to use librosa for performing the feature extraction I described above. 
 
 ``` python
-# First we load an audio file.
-raw_sound, sample_rate = librosa.load("24074-1-0-3.wav")
+# First we load the audio file.
+raw_sound, sample_rate = librosa.load(file_name)  # file must be in the root folder of your project
 
 print("raw_sound:", raw_sound)
 print("raw_sound.shape:", raw_sound.shape)
+print("\n")
 
-mfccs = librosa.feature.mfcc(y=raw_sound, sr=sample_rate, n_mfcc=20) # compute the MFCC matrix
+mfccs = librosa.feature.mfcc(y=raw_sound, sr=sample_rate, n_mfcc=20)  # compute the MFCC matrix
 
 # Next we compute the summary statistics, each of them summarizes the MFCC matrix in its own way.
-mfccsMin = np.min(mfccs, axis=1)  # row-wise minimum
-mfccsMax = np.max(mfccs, axis=1)
-mfccsMedian = np.median(mfccs, axis=1)
-mfccsMean = np.mean(mfccs, axis=1)
-mfccsVariance = np.var(mfccs, axis=1)
-mfccsSkeweness = skew(mfccs, axis=1)
-mfccsKurtosis = kurtosis(mfccs, axis=1)
+mfccs_min = np.min(mfccs, axis=1)  # row-wise minimum, etc
+mfccs_max = np.max(mfccs, axis=1)
+mfccs_median = np.median(mfccs, axis=1)
+mfccs_mean = np.mean(mfccs, axis=1)
+mfccs_variance = np.var(mfccs, axis=1)
+mfccs_skeweness = skew(mfccs, axis=1)
+mfccs_kurtosis = kurtosis(mfccs, axis=1)
 
 # We obtain the feature vector by concatenating the different summaries.
-finalFeatureVector = np.concatenate([mfccsMin, mfccsMax, mfccsMedian, mfccsMean, mfccsVariance, mfccsSkeweness, mfccsKurtosis])
+finalFeatureVector = np.concatenate([mfccs_min, mfccs_max, mfccs_median, mfccs_mean, mfccs_variance, mfccs_skeweness, mfccs_kurtosis])
 
-# We can take a look at the result of each step by printing the intermediate results.
 print("mfccs:", mfccs)
 print("mfccs.shape:", mfccs.shape)
+print("\n")
 
-print("mfccsMin:", mfccsMin)
-print("mfccsMin.shape:", mfccsMin.shape)
+print("mfccs_min:", mfccs_min)
+print("mfccs_min.shape:", mfccs_min.shape)
+print("\n")
 
-print("mfccsMax:", mfccsMax)
-print("mfccsMax.shape:", mfccsMax.shape)
+print("mfccs_max:", mfccs_max)
+print("mfccs_max.shape:", mfccs_max.shape)
+print("\n")
 
-print("mfccsMedian:", mfccsMedian)
-print("mfccsMedian.shape:", mfccsMedian.shape)
+print("mfccs_median:", mfccs_median)
+print("mfccs_median.shape:", mfccs_median.shape)
+print("\n")
 
-print("mfccsMean:", mfccsMean)
-print("mfccsMean.shape:", mfccsMean.shape)
+print("mfccs_mean:", mfccs_mean)
+print("mfccs_mean.shape:", mfccs_mean.shape)
+print("\n")
 
-print("mfccsVariance:", mfccsVariance)
-print("mfccsVariance.shape:", mfccsVariance.shape)
+print("mfccs_variance:", mfccs_variance)
+print("mfccs_variance.shape:", mfccs_variance.shape)
+print("\n")
 
-print("mfccsSkeweness:", mfccsSkeweness)
-print("mfccsSkeweness.shape:", mfccsSkeweness.shape)
+print("mfccs_skeweness:", mfccs_skeweness)
+print("mfccs_skeweness.shape:", mfccs_skeweness.shape)
+print("\n")
 
-print("mfccsKurtosis:", mfccsKurtosis)
-print("mfccsKurtosis.shape:", mfccsKurtosis.shape)
+print("mfccs_kurtosis:", mfccs_kurtosis)
+print("mfccs_kurtosis.shape:", mfccs_kurtosis.shape)
+print("\n")
 
 print("finalFeatureVector", finalFeatureVector)
 print("finalFeatureVector.shape:", finalFeatureVector.shape)
@@ -249,27 +257,20 @@ The feature extraction phase tends to take long—my PC takes about 6 minutes to
 I plan to do a 10-fold cross validation, the following two functions make it easy to extract and store the features systematically. I use `extract_feature_from_directories` to iterate through the folds and extract features from the recordings they contain--all the extracted feature vectors are combined into one feature matrix (rows are feature vectors, columns are features). 
 
 ``` python
-def extract_features_from_directory(parent_dir, sub_dirs, file_ext="*.wav"):
-    """
-    Processes all the files in the subdirectories located in the parent directory. For each file (with the correct extension) in the subdirectories, it extracts the feature vector and stores it into the feature matrix. The labels are inferred from the file names.
-    :param parent_dir: Parent directory that contains the sub directories.
-    :param sub_dirs: Subdirectories whose files will be processed.
-    :param file_ext: File extension of the files which will be processed.
-    :return: A pair. The feature matrix (each row is a feature vector, each column a feature), and the corresponding labels for each row of the matrix.
-    """
+def extract_features_from_directories(parent_dir, sub_dirs, file_ext="*.wav"):
     feature_matrix, labels = np.empty((0, featureVectorLength)), np.empty(0)
 
     for label, sub_dir in enumerate(sub_dirs):
         for fn in glob.glob(os.path.join(parent_dir, sub_dir, file_ext)):
             try:
-              mfccsMin, mfccsMax, mfccsMedian, mfccsMean, mfccsVariance, mfccsSkeweness, mfccsKurtosis = extract_features_from_file(fn)
-              print("Finished processing file: ", fn)
+                mfccs_min, mfccs_max, mfccs_median, mfccs_mean, mfccs_variance, mfccs_skeweness, mfccs_kurtosis = extract_features_from_file(fn)
+                print("Finished processing file: ", fn)
             except Exception as e:
-              print("Error while processing file: ", fn)
-              continue
+                print("Error while processing file: ", fn)
+                continue
 
             # concatenate extracted features
-            new_feature_vector = np.hstack([mfccsMin, mfccsMax, mfccsMedian, mfccsMean, mfccsVariance, mfccsSkeweness, mfccsKurtosis])
+            new_feature_vector = np.hstack([mfccs_min, mfccs_max, mfccs_median, mfccs_mean, mfccs_variance, mfccs_skeweness, mfccs_kurtosis])
 
             # add current feature vector as last row in feature matrix
             feature_matrix = np.vstack([feature_matrix, new_feature_vector])
@@ -284,36 +285,31 @@ I use `prepare_features` to extract and store the training and validation set fo
 
 ``` python
 def prepare_features(training_dirs, validation_dirs, training_name, validation_name):
-    """
-    Extracts and stores features and labels as a pandas dataframe and series, respectively.
-    :return: Nothing. Just stores the features and labels as files.
-    """
-
     parent_dir = 'Sound-Data'  # name of the directory which contains the recordings
     training_sub_dirs = training_dirs
     validation_sub_dirs = validation_dirs
 
     # ndarrays
-    training_features, training_labels = extract_features_from_directory(parent_dir, training_sub_dirs)
-    test_features, test_labels = extract_features_from_directory(parent_dir, validation_sub_dirs)
+    training_features, training_labels = extract_features_from_directories(parent_dir, training_sub_dirs)
+    test_features, test_labels = extract_features_from_directories(parent_dir, validation_sub_dirs)
 
     # convert ndarray to pandas dataframe
     training_examples = pd.DataFrame(training_features, columns=list(range(1, featureVectorLength+1)))
     # convert ndarray to pandas series
-    training_targets = pd.Series(training_labels.tolist())
+    training_labels = pd.Series(training_labels.tolist())
 
     # convert ndarray to pandas dataframe
     validation_examples = pd.DataFrame(test_features, columns=list(range(1, featureVectorLength+1)))
     # convert ndarray to pandas series
-    validation_targets = pd.Series(test_labels.tolist())
+    validation_labels = pd.Series(test_labels.tolist())
 
     # store extracted training data
-    training_examples.to_pickle('Extracted_Features\\MFCCS_Cross_Validation\\' + training_name + '_features.pkl')
-    training_targets.to_pickle('Extracted_Features\\MFCCS_Cross_Validation\\' + training_name + '_labels.pkl')
+    training_examples.to_pickle('Extracted_Features\\' + training_name + '_features.pkl')
+    training_labels.to_pickle('Extracted_Features\\' + training_name + '_labels.pkl')
 
     # store extracted validation data
-    validation_examples.to_pickle('Extracted_Features\\MFCCS_Cross_Validation\\' + validation_name + '_features.pkl')
-    validation_targets.to_pickle('Extracted_Features\\MFCCS_Cross_Validation\\' + validation_name + '_labels.pkl')
+    validation_examples.to_pickle('Extracted_Features\\' + validation_name + '_features.pkl')
+    validation_labels.to_pickle('Extracted_Features\\' + validation_name + '_labels.pkl')
 ```
 
 The following snippet uses the above functions to create the training and validation sets that are used during the first run of the 10-fold cross-validation:
@@ -327,7 +323,9 @@ validation_dirs = ["fold10"]
 prepare_features(training_dirs, validation_dirs, 'notFold10', 'fold10')
 ```
 
-To summarize, we extracted one MFCC matrix per recording. The features we will use during classification are the summary statistics of the MFCC matrix’s coefficients (rows). By concatenating the different summaries of the MFCC matrix we obtain a compact representation of the original audio recording—the final feature vector. Next, we will discuss the classification phase and how the neural network will use the feature vectors we developed in this section.
+To summarize, we extracted one MFCC matrix per recording. The features we will use during classification are the summary statistics of the MFCC matrix’s coefficients (rows). By concatenating the different summaries of the MFCC matrix we obtain a compact representation of the original audio recording—the final feature vector. The code for this section can be found [here](https://gist.github.com/davidglavas/c33a9eb5bec736e47438ec546f629520)
+
+Next, we will discuss the classification phase and how the neural network will use the feature vectors we developed in this section.
 
 ## Classification
 In this section we will use a neural network to classify the audio recordings. We want to classify each audio recording into one of 10 classes mentioned earlier. Hence, we are dealing with a multi-class classification problem where the classes are mutually exclusive (a recording can belong to only one class). Therefore, we want to build a neural network with a softmax layer at the top.
@@ -342,12 +340,12 @@ We start by defining the feature column:
 
 ``` python
 def construct_feature_columns():
-    """Constructs the TensorFlow Feature Column.
+    """Construct the TensorFlow Feature Columns.
 
     Returns:
-      A set of feature columns.
+      A set of feature columns
     """
-    return set([tf.feature_column.numeric_column('audioFeatures' shape=featureVectorSize)])
+    return set([tf.feature_column.numeric_column('audioFeatures', shape=featureVectorSize)])
 ```
 
 Next we will define two functions for creating the input functions, one for fetching data from the training set, the other for the validation set:
@@ -368,9 +366,9 @@ def create_training_input_fn(features, labels, batch_size, num_epochs=None, shuf
     def _input_fn(num_epochs=num_epochs, shuffle=True):
         idx = np.random.permutation(features.index)
         raw_features = {"audioFeatures": features.reindex(idx)}
-        raw_targets = np.array(labels[idx])
+        raw_labels = np.array(labels[idx])
 
-        ds = Dataset.from_tensor_slices((raw_features, raw_targets))
+        ds = Dataset.from_tensor_slices((raw_features, raw_labels))
         ds = ds.batch(batch_size).repeat(num_epochs)
 
         if shuffle:
@@ -396,9 +394,9 @@ def create_predict_input_fn(features, labels, batch_size):
 
     def _input_fn():
         raw_features = {"audioFeatures": features.values}
-        raw_targets = np.array(labels)
+        raw_labels = np.array(labels)
 
-        ds = Dataset.from_tensor_slices((raw_features, raw_targets))
+        ds = Dataset.from_tensor_slices((raw_features, raw_labels))
         ds = ds.batch(batch_size)
 
         # Returns the next batch of data.
@@ -418,9 +416,9 @@ def train_nn_classification_model(
         batch_size,
         hidden_units,
         training_examples,
-        training_targets,
+        training_labels,
         validation_examples,
-        validation_targets,
+        validation_labels,
         model_Name='no_Name'):
     """Trains a neural network classification model.
 
@@ -430,15 +428,17 @@ def train_nn_classification_model(
 
     Args:
       learning_rate: An `int`, the learning rate to use.
-      regularization_strength: A 'float', the regularization strength.
-      steps: A non-zero `int`, the total number of training steps. A training step consists of a forward and backward pass using a single batch.
+      regularization_strength: A float, the regularization strength.
+      steps: A non-zero `int`, the total number of training steps. A training step
+        consists of a forward and backward pass using a single batch.
       batch_size: A non-zero `int`, the batch size.
       hidden_units: A `list` of int values, specifying the number of units in each layer.
       training_examples: A `DataFrame` containing the training features.
-      training_targets: A `DataFrame` containing the training labels.
+      training_labels: A `DataFrame` containing the training labels.
       validation_examples: A `DataFrame` containing the validation features.
-      validation_targets: A `DataFrame` containing the validation labels.
-      model_Name: A `string` containing the model's name which is used when storing the loss curve and confusion matrix plots.
+      validation_labels: A `DataFrame` containing the validation labels.
+      model_Name: A `string` containing the model's name which is used when storing the loss curve and confusion
+       matrix plots.
 
     Returns:
       The trained `DNNClassifier` object.
@@ -449,11 +449,11 @@ def train_nn_classification_model(
 
     # Create the input functions.
     predict_training_input_fn = create_predict_input_fn(
-        training_examples, training_targets, batch_size)
+        training_examples, training_labels, batch_size)
     predict_validation_input_fn = create_predict_input_fn(
-        validation_examples, validation_targets, batch_size)
+        validation_examples, validation_labels, batch_size)
     training_input_fn = create_training_input_fn(
-        training_examples, training_targets, batch_size)
+        training_examples, training_labels, batch_size)
 
     # Create feature columns.
     feature_columns = construct_feature_columns()
@@ -461,7 +461,7 @@ def train_nn_classification_model(
     # Create a DNNClassifier object.
     my_optimizer = tf.train.ProximalAdagradOptimizer(
         learning_rate=learning_rate,
-        l2_regularization_strength=regularization_strength
+        l2_regularization_strength=regularization_strength  # can be swapped for l1 regularization
     )
 
     classifier = tf.estimator.DNNClassifier(
@@ -494,8 +494,8 @@ def train_nn_classification_model(
         validation_pred_one_hot = tf.keras.utils.to_categorical(validation_pred_class_id, 10)
 
         # Use predictions to compute training and validation errors.
-        training_log_loss = metrics.log_loss(training_targets, training_pred_one_hot)
-        validation_log_loss = metrics.log_loss(validation_targets, validation_pred_one_hot)
+        training_log_loss = metrics.log_loss(training_labels, training_pred_one_hot)
+        validation_log_loss = metrics.log_loss(validation_labels, validation_pred_one_hot)
 
         # Print validation error of current model.
         print("  period %02d : %0.2f" % (period, validation_log_loss))
@@ -513,29 +513,33 @@ def train_nn_classification_model(
     final_predictions = np.array([item['class_ids'][0] for item in final_predictions])
 
     # Evaluate predictions of final model.
-    accuracy = metrics.accuracy_score(validation_targets, final_predictions)
+    accuracy = metrics.accuracy_score(validation_labels, final_predictions)
     print("Final accuracy (on validation data): %0.2f" % accuracy)
 
-    # Store a graph of loss metrics over periods.
+    # Output a graph of loss metrics over periods.
     plt.ylabel("LogLoss")
     plt.xlabel("Periods")
     plt.title("LogLoss vs. Periods")
     plt.plot(training_errors, label="training")
     plt.plot(validation_errors, label="validation")
     plt.legend()
+    # plt.show()  # blocks execution
     plt.savefig('Results\\' + model_Name + '_loss_curve.png', bbox_inches='tight')
+    plt.gcf().clear()
 
     # Create a confusion matrix.
-    cm = metrics.confusion_matrix(validation_targets, final_predictions)
+    cm = metrics.confusion_matrix(validation_labels, final_predictions)
 
-    # Store the normalized confusion matrix by row (the number of samples in each class).
+    # Normalize the confusion matrix by the number of samples in each class (rows).
     cm_normalized = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
     ax = sns.heatmap(cm_normalized, cmap="bone_r")
     ax.set_aspect(1)
     plt.title("Confusion matrix")
     plt.ylabel("True label")
     plt.xlabel("Predicted label")
+    # plt.show()  # blocks execution
     plt.savefig('Results\\' + model_Name + '_confusion_matrix.png', bbox_inches='tight')
+    plt.gcf().clear()
 
     return classifier
 ```
@@ -543,30 +547,27 @@ def train_nn_classification_model(
 We train the model by calling the training function we defined above like this:
 
 ``` python
-# load and mean normalize the stored feature vectors for the training set
-training_examples = meanNormalization(pd.read_pickle('Extracted_Features\\MFCCS_Cross_Validation\\notFold10_features.pkl'))
+# unpickle and prepare training data
+training_examples = mean_normalize(pd.read_pickle('Extracted_Features\\notFold10_features.pkl'))
+training_labels = pd.read_pickle('Extracted_Features\\notFold10_labels.pkl')
 
-# load the stored labels for the training set
-training_targets = pd.read_pickle('Extracted_Features\\MFCCS_Cross_Validation\\notFold10_labels.pkl')
+# unpickle and prepare validation data
+validation_examples = mean_normalize(pd.read_pickle('Extracted_Features\\fold10_features.pkl'))
+validation_labels = pd.read_pickle('Extracted_Features\\fold10_labels.pkl')
 
-# load and mean normalize the stored feature vectors for the validation set
-validation_examples = meanNormalization(pd.read_pickle('Extracted_Features\\MFCCS_Cross_Validation\\fold10_features.pkl'))
-
-# load the stored labels for the validation set
-validation_targets = pd.read_pickle('Extracted_Features\\MFCCS_Cross_Validation\\fold10_labels.pkl')
-
-# train the classifier
-classifier = train_nn_classification_model(
+train_nn_classification_model(
     learning_rate=0.003,
     regularization_strength=1.0,
     steps=5000,
     batch_size=32,
-    hidden_units=[120], # One layer with 120 units, for more layers simply add more integers to the list.
+    hidden_units=[120],  # One layer with 120 units, for more layers simply add more integers to the list.
     training_examples=training_examples,
-    training_targets=training_targets,
+    training_labels=training_labels,
     validation_examples=validation_examples,
-    validation_targets=validation_targets)
+    validation_labels=validation_labels)
  ```
+ 
+To summarize, we used the Estimator's API `DNNClassifier` to build a simple neural network with which we classified the feature vectors we created earlier. The code for this section can be found [here](https://gist.github.com/davidglavas/60d102bb236cda4f2ff129324352dc86)
 
 
 ## Results
@@ -584,7 +585,6 @@ def k_fold_cross_validation(training_set_names, validation_set_names):
     element is the name of the training examples, second element is the name of the corresponding training labels.
     :param validation_set_names: List of validation sets stored as tuples. Each tuple is a pair of strings, first
      element is the name of the validation examples, second element is the name of the corresponding validation labels.
-    :return:
     """
 
     # group each training set with its corresponding validation set
@@ -597,20 +597,20 @@ def k_fold_cross_validation(training_set_names, validation_set_names):
 
         print("#####################################################################################")
         print("Model is trained with ", training_name[0], "and validated with", validation_name[0])
-        classifier = train_nn_classification_model(
-        learning_rate=0.003,
-        regularization_strength=0.1,
-        steps=5000,
-        batch_size=32,
-        hidden_units=[120],
-        training_examples=training_examples,
-        training_labels=training_labels,
-        validation_examples=validation_examples,
-        validation_labels=validation_labels,
-        model_Name=training_name[0])
+        train_nn_classification_model(
+            learning_rate=0.003,
+            regularization_strength=0.1,
+            steps=5000,
+            batch_size=32,
+            hidden_units=[120],
+            training_examples=training_examples,
+            training_labels=training_labels,
+            validation_examples=validation_examples,
+            validation_labels=validation_labels,
+            model_Name=training_name[0])
  
 
-  def load_features(dataset_name):
+def load_features(dataset_name):
     """
     Unpickles the given examples and labels. Mean normalizes the examples.
     :param dataset_name: Pair of names referring to an example and corresponding label set.
@@ -618,15 +618,15 @@ def k_fold_cross_validation(training_set_names, validation_set_names):
      element are the corresponding labels (pandas Series).
     """
 
+    examples_path = 'Extracted_Features\\' + dataset_name[0]
     # unpickles and mean normalizes examples
-    examples_path = 'Extracted_Features\\MFCCS_Cross_Validation\\' + dataset_name[0]
     examples = mean_normalize(pd.read_pickle(examples_path))
 
     # unpickles labels
-    labels_path = 'Extracted_Features\\MFCCS_Cross_Validation\\' + dataset_name[1]
+    labels_path = 'Extracted_Features\\' + dataset_name[1]
     labels = pd.read_pickle(labels_path)
 
-    return examples, labels  
+    return examples, labels
  ```
 
 Finally, we perform the 10-fold cross validation by specifying the folds and calling the above `k_fold_cross_validation` function. Note that the `k` is equal to the number of pairs in `training_set_names` and `validation_set_names`. Further, the first cross validation run will use the first tuple in `training_set_names` (corresponds to the first 9 folds) for training, and the first tuple in `validation_set_names` (corresponds to the tenth fold) for validation. Similarly for the rest of the runs.
@@ -675,8 +675,7 @@ classifier = train_nn_classification_model(
     model_Name=training_name[0])
  ```
 
-
- The loss curves and confusion matrices are similar across folds. The following is obtained by training on the first 9 folds and validating on the 10th:
+The loss curves and confusion matrices are similar across folds. The following is obtained by training on the first 9 folds and validating on the 10th:
 
 <p align="center">
   <img src="https://github.com/davidglavas/davidglavas.github.io/blob/master/_posts/Figures/2018-05-20-lets-build-an-audio-classifier/classification_results.png?raw=true">
