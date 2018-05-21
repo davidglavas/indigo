@@ -323,7 +323,7 @@ validation_dirs = ["fold10"]
 prepare_features(training_dirs, validation_dirs, 'notFold10', 'fold10')
 ```
 
-To summarize, we extracted one MFCC matrix per recording. The features we will use during classification are the summary statistics of the MFCC matrix’s coefficients (rows). By concatenating the different summaries of the MFCC matrix we obtain a compact representation of the original audio recording—the final feature vector. The code for this section can be found [here](https://gist.github.com/davidglavas/c33a9eb5bec736e47438ec546f629520)
+To summarize, we extracted one MFCC matrix per recording. The features we will use during classification are the summary statistics of the MFCC matrix’s coefficients (rows). By concatenating the different summaries of the MFCC matrix we obtain a compact representation of the original audio recording—the final feature vector. The code for this section can be found [here](https://gist.github.com/davidglavas/c33a9eb5bec736e47438ec546f629520).
 
 Next, we will discuss the classification phase and how the neural network will use the feature vectors we developed in this section.
 
@@ -567,7 +567,7 @@ train_nn_classification_model(
     validation_labels=validation_labels)
  ```
  
-To summarize, we used the Estimator's API `DNNClassifier` to build a simple neural network with which we classified the feature vectors we created earlier. The code for this section can be found [here](https://gist.github.com/davidglavas/60d102bb236cda4f2ff129324352dc86)
+To summarize, we used the Estimator's API `DNNClassifier` to build a simple neural network with which we classified the feature vectors we created earlier. The code for this section can be found [here](https://gist.github.com/davidglavas/60d102bb236cda4f2ff129324352dc86).
 
 
 ## Results
