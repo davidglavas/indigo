@@ -16,4 +16,4 @@ Hi, my name is David. I'm currently pursuing a master's degree in computer scien
 
 I'm most interested in the process of converting ideas into deployable software. Find out what I'm up to by taking a look at my [blog](http://davidglavas.me/blog/) or [GitHub](https://github.com/davidglavas) page.
 
-In my spare time I enjoy delving into unfamiliar topics. I feel an unreasonable amount of joy while using tools in unconventional, yet effective, ways for problems they weren't designed for---I once used a lighter to open a bottle of coke. Apart from coding I sleep, read, or spend time with friends.
+In my spare time I enjoy delving into unfamiliar topics. I feel an unreasonable amount of joy while using tools in unconventional, yet effective ways for problems they weren't designed for---I once used a lighter to open a bottle of coke. Apart from coding I sleep, read, or spend time with friends.
