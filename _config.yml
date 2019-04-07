@@ -1,6 +1,6 @@
 # main text of home
 name: David Glavas
-bio: Computer science student inerested in software engineering.
+bio: likes software.
 
 # twitter summary info
 description: A blog about things a computer science student thinks about.
@@ -50,12 +50,12 @@ github: davidglavas
 #medium: medium
 # vimeo: myvimeo
 # lanyrd: mylanyrd
-email: divadglavas@gmail.com
+email: contact@davidglavas.me
 
 authors:
     davidglavas:
         name: David Glavas
-        bio: Computer science student inerested in security engineering.
+        bio: Computer science student
         external-image: true
         picture: https://avatars3.githubusercontent.com/u/18364494?s=400&v=4
 #        twitter: johndoe
