@@ -12,7 +12,7 @@ Read more: https://html.com/tags/comment-tag/#ixzz58Mbwe05R
 Currently I'm exploring the world of security engineering with a special interest in adversarial machine learning.
 -->
 
-Hi, my name is David. I'm currently pursuing a master's degree in computer science at [TUM](https://www.tum.de/nc/en/homepage/). 
+Hi, my name is David and I like writing software. I'm currently pursuing a master's degree in computer science at [TUM](https://www.tum.de/nc/en/homepage/). Did I mention that I like writing software?
 
 <!-- 
 I'm most interested in the process of converting ideas into deployable software. Find out what I'm up to by taking a look at my [blog](http://davidglavas.me/blog/) or [GitHub](https://github.com/davidglavas) page.
